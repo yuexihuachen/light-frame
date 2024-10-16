@@ -10,6 +10,7 @@
     "debug": "pnpm -F './server' debug",
     "build": "pnpm -F './client' build",
     "watch:client": "pnpm -F './client' watch",
+    "start": "pnpm -F './server' start",
     "lint": "eslint ."
   },
   "author": "longwang",

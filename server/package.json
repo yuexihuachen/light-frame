@@ -1,11 +1,11 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "server",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "bun run --hot ./src/app.ts",
-    "debug": "bun run --inspect ./src/app.ts",
+    "dev": "bun run --hot ./src/index.ts",
+    "debug": "bun run --inspect ./src/index.ts",
     "start": ""
   },
   "author": "",

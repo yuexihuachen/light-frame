@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "description": "light freame client.",
   "main": "index.js",
   "scripts": {
     "build": "tsc -b && vite build --manifest",

@@ -1,0 +1,11 @@
+{
+  "src/main.tsx": {
+    "file": "assets/app-AMnUV2ui.js",
+    "name": "app",
+    "src": "src/main.tsx",
+    "isEntry": true,
+    "css": [
+      "assets/app-DiwrgTda.css"
+    ]
+  }
+}

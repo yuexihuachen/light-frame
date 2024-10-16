@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import './App.css'
 
 function App() {
@@ -8,10 +8,10 @@ function App() {
     <>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-        555
+        222
         </a>
         <a href="https://react.dev" target="_blank">
-        viteLogo
+        444
         </a>
       </div>
       <h1>Vite + React</h1>

@@ -7,10 +7,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        app: './client/src/main.tsx',
+        app: './src/main.tsx',
       }
     },
-    outDir: './dist/',
+    outDir: '../server/static',
     manifest: true
   },
 })

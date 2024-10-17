@@ -1,4 +1,4 @@
-import { Hono, Context } from 'hono';
+import { Hono, type Context } from 'hono';
 import { serveStatic } from 'hono/bun';
 import * as nunjucks from "nunjucks";
 import template from "./views/index.html" with { type: "html" };

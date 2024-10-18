@@ -23,5 +23,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": true,
-  },
+    "paths": {
+     "@interface/*":["./src/app/interface/*"],
+     "@constants/*":["./src/app/constants/*"],
+    }
+  }
 }

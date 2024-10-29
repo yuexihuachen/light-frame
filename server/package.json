@@ -2,17 +2,19 @@
   "name": "server",
   "version": "1.0.0",
   "description": "server",
-  "main": "src/index.js",
+  "main": "./index.js",
   "scripts": {
-    "dev": "bun run --hot ./src/index.ts",
-    "debug": "bun run --inspect ./src/index.ts",
-    "start": "bun run ./src/index.ts"
+    "dev": "bun run --hot ./index.ts",
+    "debug": "bun run --inspect ./index.ts",
+    "start": "bun run ./index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/bun": "^1.1.11",
     "@types/nunjucks": "^3.2.6",
+    "hono": "^4.6.7",
+    "mongoose": "^8.7.1",
     "nunjucks": "^3.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -11,6 +11,7 @@
     "build": "pnpm -F './client' build",
     "watch:client": "pnpm -F './client' watch",
     "start": "pnpm -F './server' start",
+    "clean": "rm -rf ./client/node_modules ./server/node_modules",
     "lint": "eslint ."
   },
   "author": "longwang",

@@ -1,0 +1,1 @@
+export * as posts from "./post";

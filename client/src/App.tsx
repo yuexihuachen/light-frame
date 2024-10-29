@@ -1,20 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import httpRequest from "./utils/httpClient";
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  useEffect(() => {
+    const getPost = async () => {
+      const response = await httpRequest.post('/post/find', {});
+      console.log(response)
 
+    }
+    getPost()
+  }, [])
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-        888
-        </a>
-        <a href="https://react.dev" target="_blank">
-        666
-        999
-        </a>
-      </div>
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>

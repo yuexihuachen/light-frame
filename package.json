@@ -4,15 +4,16 @@
   "description": "light-template",
   "type": "module",
   "scripts": {
-    "setup": "pnpm -F './client' install && pnpm -F './server' install",
-    "dev": "pnpm run '/^watch:.*/'",
-    "watch:server": "pnpm -F './server' dev",
+    "dev": "pnpm run --filter '*' dev",
+    "server": "pnpm -F './server' dev",
     "debug": "pnpm -F './server' debug",
     "build": "pnpm -F './client' build",
-    "watch:client": "pnpm -F './client' watch",
-    "start": "pnpm -F './server' start",
-    "clean": "rm -rf ./client/node_modules ./server/node_modules",
-    "lint": "eslint ."
+    "client": "pnpm -F './client' dev",
+    "start": "bun --filter server start",
+    "clean": "rm -rf */node_modules",
+    "lint": "eslint .",
+    "server:setup":"bun --filter server setup",
+    "setup": "bun --filter server setup && bun --filter client setup"
   },
   "author": "longwang",
   "license": "ISC"

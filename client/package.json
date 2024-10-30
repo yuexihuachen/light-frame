@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -b && vite build --manifest",
-    "watch": "tsc -b && vite build -w --sourcemap"
+    "dev": "tsc -b && vite build -w --sourcemap",
+    "setup": "bun install"
   },
   "author": "",
   "license": "ISC",

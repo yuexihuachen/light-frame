@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "bun run --hot ./index.ts",
     "debug": "bun run --inspect ./index.ts",
-    "start": "bun run ./index.ts"
+    "start": "bun run ./index.ts",
+    "setup": "bun install"
   },
   "author": "",
   "license": "ISC",

@@ -1,1 +1,2 @@
-export { Post } from "./post"
+export { Post } from "./post";
+export { Category } from "./category"

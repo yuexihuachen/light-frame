@@ -1,11 +1,18 @@
 {
-  "src/main.tsx": {
-    "file": "assets/app-Bqlho6Ab.js",
+  "_vendor.js": {
+    "file": "assets/vendor.js",
+    "name": "vendor"
+  },
+  "src/index.tsx": {
+    "file": "assets/app.js",
     "name": "app",
-    "src": "src/main.tsx",
+    "src": "src/index.tsx",
     "isEntry": true,
+    "imports": [
+      "_vendor.js"
+    ],
     "css": [
-      "assets/app-fgnqB1GA.css"
+      "app.css"
     ]
   }
 }

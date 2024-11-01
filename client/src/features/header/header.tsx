@@ -1,66 +1,83 @@
-import { useState } from "react";
-import {
-    Link
-} from "react-router-dom";
-import Logo from "/react.svg";
+import { useParams, useNavigate } from "react-router-dom";
+import { useGetCategoryInfoQuery } from "../../app/services/category";
+import viteLogo from "/logo.svg";
+import { CategoryItem } from "../../interface";
+import { deepClone } from "../../utils/utils";
+import { useEffect } from "react";
 
 export function Header() {
-    // const location = useLocation();
-    // const [,name] = location.pathname !== '/'? location.pathname.split('/'): ['', '/'];
-    // const [products] = useState([
-    //     {
-    //         url:'/',
-    //         name: '/',
-    //         title: 'Dashboard'
-    //     },
-    //     {
-    //         url:'/post',
-    //         name: 'post',
-    //         title: '笔记'
-    //     },
-    //     {
-    //         url:'/category',
-    //         name: 'category',
-    //         title: '类型'
-    //     },
-    //     {
-    //         url:'/search',
-    //         name: 'search',
-    //         title: '搜索'
-    //     },
-    //     {
-    //         url:'/login',
-    //         name: 'login',
-    //         title: '登录'
-    //     }
-    // ])
-    const products: any[] = useState([])
-    return <>
-        <div className="sticky top-0 z-50 min-h-full bg-white border-b">
-            <nav className="bg-white-800">
-                <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <div className="flex-shrink-0">
-                                <img className="w-8 h-8" src={`/static${Logo}`} alt="Your Company" />
-                            </div>
-                            <div className="block">
-                                <div className="flex items-baseline ml-10 space-x-4">
-                                    {
-                                        products.map((item, index) => {
-                                            return  <Link to={item.url} key={index} className={`px-3 py-4 text-sm font-medium text-gray-900 border-b-2 ${name === item.name? 'border-indigo-500': 'border-white'}`}>{item.title}</Link>
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div className="hidden md:block">
-                            <div className="flex items-center ml-4 md:ml-6">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  const navigate = useNavigate();
+  const params = useParams();
+  const param = params.id || "JavaScript";
+  const { data, isLoading } = useGetCategoryInfoQuery();
+  let menus: Partial<CategoryItem>[] = []
+  if (!isLoading) {
+    menus = deepClone(data!.data).sort((a: CategoryItem, b: CategoryItem) => a.order - b.order) as CategoryItem[];
+  }
+  useEffect(() => {
+    const sessionCategory = sessionStorage.getItem('category')
+    if (!isLoading && !sessionCategory) {
+      sessionStorage.setItem('category', JSON.stringify(data?.data[0]))
+    }
+  }, [isLoading])
+
+  const onCategory = (category: Partial<CategoryItem>) => {
+    sessionStorage.setItem('category', JSON.stringify(category))
+    navigate(`/${category.name}`)
+  }
+  return (
+    <>
+      <div className="z-[101] lg:border-b bg-white sticky top-0">
+        <header className="sticky top-0 flex m-auto bg-white max-w-screen-2xl lg:px-8">
+          <div className="flex items-center w-[19rem] py-4">
+            <img
+              src={viteLogo}
+              alt="Logo"
+              className="w-7 h-7 text-gradient-to-r from-purple-500 to-pink-500"
+              width={28}
+              height={28}
+            />
+            <a href="/" className="pl-2 text-xl font-bold text-slate-900">
+              星辰大海
+            </a>
+          </div>
+          <div className="flex items-center">
+            <nav className="h-full text-base font-medium leading-6 text-slate-700">
+              <ul className="flex items-center h-full space-x-8">
+                {!isLoading &&
+                  menus.map((category) => {
+                    return (
+                      <li
+                        key={category._id}
+                        onClick={() => onCategory(category)}
+                        className={`inline-flex items-center h-full border-b-2 cursor-pointer hover:text-purple-700 ${
+                          param === category.name
+                            ? "border-purple-700 text-purple-700"
+                            : "hover:border-purple-700 border-b-white"
+                        }`}
+                      >
+                        {category.alias}
+                      </li>
+                    );
+                  })}
+              </ul>
             </nav>
-        </div>
+          </div>
+
+          {isLoading && (
+            <>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index: number) => {
+                return (
+                  <div
+                    key={index}
+                    className="w-16 h-8 mx-3 my-auto text-center rounded bg-slate-50 text-slate-500"
+                  ></div>
+                );
+              })}
+            </>
+          )}
+        </header>
+      </div>
     </>
+  );
 }

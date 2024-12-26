@@ -1,18 +1,18 @@
 {
-  "_vendor.js": {
-    "file": "assets/vendor.js",
+  "_vendor-CAAj8L8J.js": {
+    "file": "assets/vendor-CAAj8L8J.js",
     "name": "vendor"
   },
   "src/index.tsx": {
-    "file": "assets/app.js",
+    "file": "assets/app-CS_LzMS5.js",
     "name": "app",
     "src": "src/index.tsx",
     "isEntry": true,
     "imports": [
-      "_vendor.js"
+      "_vendor-CAAj8L8J.js"
     ],
     "css": [
-      "app.css"
+      "assets/app-CIjtexCG.css"
     ]
   }
 }

@@ -6,6 +6,7 @@ import { store } from "./app/store";
 import App from "./App";
 import "./index.css";
 import SideNav from "./features/aside/aside";
+import Content from "./features/content/content";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
             </div>
             <div className="lg:pl-[20.8rem]">
               <main className="relative z-20 max-w-3xl pt-10 xl:max-w-none  h-[calc(100vh-61px)] overflow-y-auto">
-                hello content
+                <Content />
               </main>
             </div>
           </>

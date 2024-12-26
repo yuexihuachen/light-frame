@@ -5,11 +5,19 @@ export const postApi = api.injectEndpoints({
   endpoints: (build) => ({
     getPostInfo: build.query<Response<Omit<PostItem, 'content'>[]>, void>({
       query: () => 'post/find',
-      providesTags: ['Post'],
+    }),
+    postInfo: build.mutation<PostItem, any>({
+      query: initialPost => ({
+        url: `post/find`,
+        method: 'POST',
+        body: initialPost
+      }),
+      invalidatesTags: ['PostList'],
     })
   }),
 })
 
 export const {
-  useGetPostInfoQuery
+  useGetPostInfoQuery,
+  usePostInfoMutation
 } = postApi

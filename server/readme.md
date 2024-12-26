@@ -1,0 +1,4 @@
+- 已有 Babel 和 TypeScript，最好使用 Babel 编译代码，使用 TS 进行类型检查和生成 .d.ts 文件。
+    - TS 文档中也更推荐这种方式，但如果构建输出文件和源码差别不大的话，可直接使用 TS 编译。
+- 只有 TypeScript，可以保持现状，将来如果需要 Babel 提供的能力，可以将 TS 编译输出的 JS 再使用 Babel 编译，或者直接使用 Babel 编译 TS 文件。
+- 只有 Babel，推荐使用 TypeScript 对项目进行渐进式改造，保证项目前端质量。

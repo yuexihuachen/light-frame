@@ -3,6 +3,18 @@
     "file": "assets/vendor.js",
     "name": "vendor"
   },
+  "src/error/error.tsx": {
+    "file": "assets/error.js",
+    "name": "error",
+    "src": "src/error/error.tsx",
+    "isEntry": true,
+    "imports": [
+      "_vendor.js"
+    ],
+    "css": [
+      "app.css"
+    ]
+  },
   "src/index.tsx": {
     "file": "assets/app.js",
     "name": "app",

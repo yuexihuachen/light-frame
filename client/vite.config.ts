@@ -1,12 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 const filesName = () => {
-  if (isProduction) {
-    return {}
-  }
   return  {
     entryFileNames: 'assets/[name].js',
     chunkFileNames: 'assets/[name].js',
@@ -22,6 +17,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: './src/index.tsx',
+        error: './src/error/error.tsx'
       },
       output: {
         manualChunks: function manualChunks(id) {

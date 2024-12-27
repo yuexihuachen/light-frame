@@ -6,10 +6,20 @@ export const categoryApi = api.injectEndpoints({
     getCategoryInfo: build.query<Response<CategoryItem[]>, void>({
       query: () => 'category/find',
       providesTags: ['Category'],
+    }),
+    categoryInfo: build.mutation<CategoryItem, any>({
+      query: initialPost => ({
+        url: `category/find`,
+        method: 'POST',
+        body: initialPost
+      }),
+      invalidatesTags: ['Categories'],
     })
   }),
+  
 })
 
 export const {
-  useGetCategoryInfoQuery
+  useGetCategoryInfoQuery,
+  useCategoryInfoMutation
 } = categoryApi

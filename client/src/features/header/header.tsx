@@ -1,28 +1,21 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetCategoryInfoQuery } from "../../app/services/category";
 import viteLogo from "/logo.svg";
 import { CategoryItem } from "../../interface";
-import { deepClone } from "../../utils/utils";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export function Header() {
   const navigate = useNavigate();
   const params = useParams();
   const param = params.id || "JavaScript";
-  const { data, isLoading } = useGetCategoryInfoQuery();
-  let menus: Partial<CategoryItem>[] = []
-  if (!isLoading) {
-    menus = deepClone(data!.data).sort((a: CategoryItem, b: CategoryItem) => a.order - b.order) as CategoryItem[];
-  }
-  useEffect(() => {
-    const sessionCategory = sessionStorage.getItem('category')
-    if (!isLoading && !sessionCategory) {
-      sessionStorage.setItem('category', JSON.stringify(data?.data[0]))
-    }
-  }, [isLoading])
+  const dom = document.getElementById('categories') as HTMLInputElement;
+  const categories = JSON.parse(dom.value);
+  
+  useLayoutEffect(() => {
+    sessionStorage.setItem('category', JSON.stringify(categories));
+  }, [])
 
   const onCategory = (category: Partial<CategoryItem>) => {
-    sessionStorage.setItem('category', JSON.stringify(category))
+    sessionStorage.setItem('category', JSON.stringify(category));
     navigate(`/${category.name}`)
   }
   return (
@@ -44,8 +37,8 @@ export function Header() {
           <div className="flex items-center">
             <nav className="h-full text-base font-medium leading-6 text-slate-700">
               <ul className="flex items-center h-full space-x-8">
-                {!isLoading &&
-                  menus.map((category) => {
+                {
+                  categories.map((category: Partial<CategoryItem>) => {
                     return (
                       <li
                         key={category._id}
@@ -63,19 +56,6 @@ export function Header() {
               </ul>
             </nav>
           </div>
-
-          {isLoading && (
-            <>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="w-16 h-8 mx-3 my-auto text-center rounded bg-slate-50 text-slate-500"
-                  ></div>
-                );
-              })}
-            </>
-          )}
         </header>
       </div>
     </>

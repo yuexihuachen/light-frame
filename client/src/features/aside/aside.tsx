@@ -1,34 +1,54 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useGetPostInfoQuery } from "../../app/services/post";
+import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { usePostInfoMutation } from "../../app/services/post";
 import Search from "/search.svg";
-import { PostItem } from "../../interface/index"
+import { PostItem } from "../../interface/index";
 
 export default function SideNav() {
+  const params = useParams();
+  const navitate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const id = params.id || 'JavaScript';
   const [searchWord, setSearchWord] = useState<string>('');
-  const [selectedPost, setSelectedPost] = useState<Partial<Omit<PostItem, 'content'>>>({})
-  const { data, isLoading } = useGetPostInfoQuery();
-  const sessionCategory = sessionStorage.getItem('category')
+  const [menu, setMenu] = useState<any>([]);
+  const [PostList] = usePostInfoMutation();
+  useEffect(() => {
+    const initData = async () => {
+      let category = {
+        _id: 0
+      };
+      if (sessionStorage.getItem('category')) {
+        category = JSON.parse(sessionStorage.getItem('category') || '')[0]
+      }
+      const response: any = await PostList({
+        query: {
+          categoryId: category?._id
+        }
+      });
+      setMenu(response?.data);
+    }
+    initData();
+  }, [id]);
 
   const changeWord = (value: string) => {
     setSearchWord(value);
   }
 
   const filterPosts = (posts: Omit<PostItem, 'content'>[]) => {
-    const filterPost = posts.filter((post: Omit<PostItem, 'content'>) => post.title.includes(searchWord))
-    return filterPost
+    if (posts.length) {
+      const filterPost = posts.filter((post: Omit<PostItem, 'content'>) => post.title.includes(searchWord))
+      return filterPost
+    }
+    return []
   }
 
   const selectPost = (post: Omit<PostItem, 'content'>) => {
-    setSelectedPost(post)
+    const pathname = location.pathname.length > 1?location.pathname:'JavaScript';
+    navitate(`${pathname}?id=${post._id}`);
   };
-
-  useEffect(() => {
-    if (!selectedPost?._id && !isLoading) {
-      setSelectedPost(data?.data[0] as Omit<PostItem, 'content'>)
-    }
-  }, [isLoading, sessionCategory])
 
   return (
     <nav id="nav" className="lg:text-sm lg:leading-6">
@@ -48,13 +68,13 @@ export default function SideNav() {
         <div className="bg-gradient-to-b from-white"></div>
       </div>
       <ul>
-        {!isLoading && filterPosts(data?.data as Omit<PostItem, 'content'>[]).map((post: Omit<PostItem, 'content'>) => {
+        {filterPosts(menu as Omit<PostItem, 'content'>[]).map((post: Omit<PostItem, 'content'>) => {
           return (
             <li key={post._id} className="mt-2">
               <div
                 onClick={() => selectPost(post)}
                 className={`truncate text-base px-6 py-2 rounded text-slate-700 font-medium ${
-                  selectedPost._id === post._id
+                  searchParams.get('id') === post._id
                     ? "bg-purple-100"
                     : "hover:bg-purple-50"
                 }`}

@@ -2,20 +2,23 @@ import { useParams, useNavigate } from "react-router-dom";
 import viteLogo from "/logo.svg";
 import { CategoryItem } from "../../interface";
 import { useLayoutEffect } from "react";
+import { saveCategory } from '../../app/slice/headerSlice';
+import { useAppDispatch } from "../../app/store";
 
 export function Header() {
   const navigate = useNavigate();
   const params = useParams();
   const param = params.id || "JavaScript";
   const dom = document.getElementById('categories') as HTMLInputElement;
-  const categories = JSON.parse(dom.value);
+  const categories = JSON.parse(dom.value).sort((a: any,b: any) => a.order - b.order);
+  const dispatch = useAppDispatch()
   
   useLayoutEffect(() => {
-    sessionStorage.setItem('category', JSON.stringify(categories));
+    sessionStorage.setItem('category', JSON.stringify(categories.find((c: any) => c.name === param)));
   }, [])
 
   const onCategory = (category: Partial<CategoryItem>) => {
-    sessionStorage.setItem('category', JSON.stringify(category));
+    dispatch(saveCategory(category));
     navigate(`/${category.name}`)
   }
   return (

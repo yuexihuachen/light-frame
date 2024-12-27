@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -b && NODE_ENV=production vite build --manifest",
-    "build:dev": "tsc -b && NODE_ENV=development vite build --manifest",
+    "build:dev": "tsc -b && NODE_ENV=development vite build --sourcemap",
     "dev": "tsc -b && NODE_ENV=development vite build -w --sourcemap"
   },
   "author": "",

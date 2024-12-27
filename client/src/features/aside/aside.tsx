@@ -5,33 +5,48 @@ import { useParams, useNavigate, useLocation, useSearchParams } from "react-rout
 import { usePostInfoMutation } from "../../app/services/post";
 import Search from "/search.svg";
 import { PostItem } from "../../interface/index";
+import { selectCategory, savePost, selectPost as selectedPost } from "../../app/slice/headerSlice";
+import { useAppSelector, useAppDispatch } from "../../app/store";
 
 export default function SideNav() {
   const params = useParams();
   const navitate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const id = params.id || 'JavaScript';
+  const selectedCategory: any = useAppSelector(selectCategory);
+  const post: any = useAppSelector(selectedPost);
+  const id = searchParams.get('id') || post._id;
+  const dispatch = useAppDispatch()
   const [searchWord, setSearchWord] = useState<string>('');
   const [menu, setMenu] = useState<any>([]);
   const [PostList] = usePostInfoMutation();
   useEffect(() => {
     const initData = async () => {
-      let category = {
+      let category: any = {
         _id: 0
       };
-      if (sessionStorage.getItem('category')) {
-        category = JSON.parse(sessionStorage.getItem('category') || '')[0]
+      if (selectedCategory && selectedCategory._id) {
+        category = selectedCategory;
+      } else {
+        category = JSON.parse(sessionStorage.getItem('category') || '');
       }
       const response: any = await PostList({
         query: {
-          categoryId: category?._id
+          categoryId: category?._id,
+          published: 1
+        },
+        options: {
+          _id: 1,
+          title: 1,
+          published: 1,
+          categoryId: 1
         }
       });
       setMenu(response?.data);
+      dispatch(savePost(response?.data[0]))
     }
     initData();
-  }, [id]);
+  }, [params.id]);
 
   const changeWord = (value: string) => {
     setSearchWord(value);
@@ -74,7 +89,7 @@ export default function SideNav() {
               <div
                 onClick={() => selectPost(post)}
                 className={`truncate text-base px-6 py-2 rounded text-slate-700 font-medium ${
-                  searchParams.get('id') === post._id
+                  id === post._id
                     ? "bg-purple-100"
                     : "hover:bg-purple-50"
                 }`}

@@ -11,6 +11,7 @@ declare module "bun" {
     XSRF_SECRET: string;
     PORT: string;
     SESSION_SECRET: string;
+    MONGO_URI: string;
   }
 }
 

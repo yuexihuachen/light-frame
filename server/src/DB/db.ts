@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export default function connectDB() {
   const url: string = Bun.env.MONGO_URI || '';
+  console.log(url)
   try {
     mongoose.connect(url);
   } catch (err) {

@@ -4,18 +4,20 @@ import { useEffect, useRef } from 'react';
 import { marked } from 'marked';
 import { useSearchParams } from 'react-router-dom';
 import { usePostInfoMutation } from "../../app/services/post";
+import { selectPost } from "../../app/slice/headerSlice";
+import { useAppSelector } from "../../app/store";
 
 export default function Content() {
   const [searchParams] = useSearchParams();
-  const id = searchParams.get('id');
+  const selectedPost = useAppSelector(selectPost);
+  const id = searchParams.get('id') || selectedPost._id;
   const markdownRef = useRef<HTMLDivElement>(null);
   const [PostList] = usePostInfoMutation();
-  
   useEffect(() => {
     async function fetchPosts() {
       const response: any = await PostList({
         query: {
-          _id: id
+          _id: id || selectedPost._id
         },
         options: {
           _id: 1,
@@ -34,8 +36,6 @@ export default function Content() {
     }
     fetchPosts();
   }, [id]);
-
-
 
   return (
     <section>

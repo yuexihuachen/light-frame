@@ -5,13 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm run --filter '*' dev",
-    "server:dev": "pnpm -F './server' dev",
-    "server:debug": "pnpm -F './server' debug",
     "client:build": "pnpm -F './client' build",
     "client:build:dev": "pnpm -F './client' build:dev",
-    "client:dev": "pnpm -F './client' dev",
-    "start": "bun --filter server start",
-    "clean": "rm -rf */node_modules"
+    "server:dev": "pnpm -F './server' dev",
+    "server:debug": "pnpm -F './server' debug",
+    "start": "pnpm -F './server' start"
   },
   "author": "longwang",
   "license": "ISC"
